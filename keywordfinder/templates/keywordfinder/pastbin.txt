@@ -1,0 +1,58 @@
+  obj = DataBase.objects.all()
+
+            note = 'The suggested KeyWords '
+            #query = 'SELECT * FROM keywordfinder_database WHERE keywords LIKE %s', [search]
+            px = []
+            for p in DataBase.objects.raw('SELECT * FROM keywordfinder_database'):
+                #print(p.keywords)
+                px.append(p.keywords)
+            split_key = []
+            for i in range(len(px)):
+                split_db_key = px[i].split(',')
+                split_key.append(split_db_key)
+
+            final_keyword_dummy = final_keyword
+            s_keyword = final_keyword_dummy.split(',')
+            com_list_key = []
+            print(len(s_keyword))
+            for i in s_keyword:
+                com_list_key.append(i)
+            matching = [s for s in px if com_list_key[5] in s]
+
+            for s in s_keyword:
+                print('s', s)
+
+            print(type(matching))
+            print(len(matching))
+            print(matching)
+            for i in matching:
+                print('matching i', i)
+            #print(matching.replace('dota 2 statistics', ''))
+            print(type(s_keyword))
+            #new_matching = matching[0].replace(s_keyword, "")
+
+
+
+
+
+
+
+
+
+
+            obj = DataBase.objects.all()
+
+            db_keywords_list = []
+            db_url_list = []
+            for i in obj:
+                db_keywords_list.append(i.keywords)
+                db_url_list.append(i.url)
+            note = 'The KeyWord are Present in '
+            #query = 'SELECT * FROM keywordfinder_database WHERE keywords LIKE %s', [search]
+            px = []
+            for p in DataBase.objects.raw('SELECT * FROM keywordfinder_database'):
+                #print(p.keywords)
+                px.append(p.keywords)
+
+            matching = [s for s in px if search in s]
+

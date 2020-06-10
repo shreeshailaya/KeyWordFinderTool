@@ -1,0 +1,100 @@
+{% include "header.html" %}
+<html>
+<head>
+<body style="background-color:powderblue;"></body>
+    <meta charset="UTF-8">
+    <title>appseacher</title>
+</head>
+<body>
+<h1>APP-SEARCHER</h1>
+
+<label for="sel1">Select Store :</label>
+   <select class="form-control" id="sel1">
+        <option>Select</option>
+        <option value="gstore">Google Play Store</option>
+        <option value="istore">Apple IOS Store</option>
+   </select>
+<br>
+<div class="gstore box">
+   <div class="form-inline" id="playStore">
+    <label for="pkg" class="mb-2 mr-sm-2">Package Name:</label>
+    <input type="text" class="form-control mb-2 mr-sm-2" id="pkg" placeholder="Package Name" name="package">
+    <button id="gInfo" class="btn btn-primary mb-2">Get Info</button>
+  </div>
+</div>
+<div class="istore box">
+    <div class="form-inline" id="iosStore">
+        <label for="appname" class="mb-2 mr-sm-2">Application Name:</label>
+        <input type="text" class="form-control mb-2 mr-sm-2" id="appname" placeholder="Enter Application Name" name="app">
+        <label for="ios" class="mb-2 mr-sm-2">Application ID:</label>
+        <input type="text" class="form-control mb-2 mr-sm-2" id="ios" placeholder="Enter Id" name="id">
+        <button id="iInfo" class="btn btn-primary mb-2">Get Info</button>
+    </div>
+</div>
+
+<div id="data">
+
+</div>
+
+</body>
+<script>
+    $(document).ready(function(){
+    $("select").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".box").not("." + optionValue).hide();
+                $("." + optionValue).show();
+            } else{
+                $(".box").hide();
+            }
+        });
+    }).change();
+});
+
+$(document).ready(function(){
+    $('#gInfo').click(function(){
+    var packageName = $('#pkg').val();
+         $('#data').empty();
+         $('#gInfo').attr("disabled", true);
+         $.ajax({
+         url: "appsearcher/playstore",
+         type: "GET",
+         dataType: "json",
+         data: {id:packageName},
+         success: function (data) {
+            var newData = JSON.parse(data);
+            $('#data').append("<div class='card' style='width: 18rem;'><img src='"+newData.image+"' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>"+newData.title+"</h5><h5 class='card-title'>Developer: "+newData.developer+"</h5><h5 class='card-title'>Downloads: "+newData.downloads+"</h5><h5 class='card-title'>App Rating: "+newData.rating+"</h5><h5 class='card-title'>No. of Reviews: "+newData.reviews+"</h5><p class='card-text'>"+newData.info.substring(0,200) + "..."+"</p></div></div>");
+            $('#gInfo').removeAttr("disabled");
+         },
+         error: function(error) {
+           console.log(error.responseText);
+         }
+        });
+    });
+});
+
+$(document).ready(function(){
+    $('#iInfo').click(function(){
+    var appName = $('#appname').val();
+    var appId = $('#ios').val();
+    $('#data').empty();
+    $('#iInfo').attr("disabled", true);
+         $.ajax({
+         url: "appsearcher/iosstore",
+         type: "GET",
+         data: {appname:appName,id:appId} ,
+         success: function (data) {
+               var newData = JSON.parse(data);
+               $('#data').append("<div class='card' style='width: 18rem;'><img src='"+newData.image+"' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>"+newData.title+"</h5><h5 class='card-title'>Developer: "+newData.developer+"</h5><h5 class='card-title'>App Rating: "+newData.rating+"</h5><h5 class='card-title'>No. of Reviews: "+newData.reviews+"</h5><p class='card-text'>"+newData.info+ "..."+"</p></div></div>");
+               $('#iInfo').removeAttr("disabled");
+               console.log(newData.info);
+         },
+         error: function(error) {
+           console.log(error);
+         }
+        });
+    });
+});
+</script>
+</html>

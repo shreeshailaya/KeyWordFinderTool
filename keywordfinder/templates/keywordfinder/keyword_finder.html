@@ -1,0 +1,112 @@
+{% include "header.html" %}
+<html lang="en">
+<head>
+    <body style="background-color:powderblue;"></body>
+    <meta charset="UTF-8">
+    <title>Keywordfinder</title>
+</head>
+<body>
+<H1>KEYWORD-FINDER</H1>
+
+
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="text" name="search" id="search" placeholder="Enter URL">
+</form>
+<br>
+<br>
+<h3> {{note}} </h3>
+
+{% for s in  text%}
+{{s}}
+<br>
+<br>
+{% endfor %}
+<br>
+
+<table id="info_table">
+  <tr>
+    <th>Meta Tag Name</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Url</td>
+    <td>{{url}}</td>
+  </tr>
+
+    <tr>
+    <td>Type</td>
+    <td>{{type}}</td>
+  </tr>
+
+  <tr>
+    <td>KeyWords</td>
+    <td>{{keyword}}</td>
+  </tr>
+  <tr>
+    <td>Description</td>
+    <td>{{dec}}</td>
+  </tr>
+  <tr>
+    <td>Logo Url</td>
+    <td>{{img}}</td>
+  </tr>
+
+  <tr>
+    <td>CSRF Token</td>
+    <td>{{csrf}}</td>
+  </tr>
+
+</table>
+<br>
+<br>
+
+<style>
+  input[type=text] {
+  width: 225px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+  width: 100%;
+}
+
+
+
+#info_table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#info_table td, #info_table th {
+  border: 3px solid #ddd;
+  padding: 8px;
+}
+
+
+
+
+#info_table tr:hover {background-color: #ddd;}
+
+#info_table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #2297f1;
+  color: white;
+}
+</style>
+</body>
+</html>
